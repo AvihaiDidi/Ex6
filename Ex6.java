@@ -3,6 +3,8 @@
  */
 public class Ex6 {
 	public static void main(String[] args) {
+		Settings s = new Settings("settings.txt");
+		s.load();
 		Board b = new Board(8, 8);
 		b.SetUpGame();
 		ConsoleDisplay d = new ConsoleDisplay();
