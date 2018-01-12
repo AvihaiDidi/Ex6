@@ -20,6 +20,13 @@ public class MainMenuController {
 	private Button button2;
 	@FXML
 	private Button button3;
+	@FXML
+	/*
+	 * Initializes the values of the diffrent controllers.
+	 */
+	public void initialize() {
+		
+	}
 	/*
 	 * Loads the main game.
 	 * @param event - the button press event.
