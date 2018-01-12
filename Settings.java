@@ -1,4 +1,4 @@
-import java.awt.Color;
+package application;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
@@ -7,11 +7,13 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 
+import javafx.scene.paint.Color;
+
 public class Settings {
 	//the player who starts, takes the value 1 or 2.
 	public int starter;
-	public Color p1c;
-	public Color p2c;
+	public javafx.scene.paint.Color p1c;
+	public javafx.scene.paint.Color p2c;
 	public int width;
 	public int height;
 	private File filename;
@@ -32,13 +34,13 @@ public class Settings {
             in = new BufferedReader(new InputStreamReader(new FileInputStream(filename)));
             this.starter = Integer.parseInt(in.readLine());
             split = in.readLine().split(" ");
-            p1c = new Color((float)(((float)Integer.parseInt(split[0])) / 255.0), 
-            		(float)(((float)Integer.parseInt(split[1])) / 255.0),
-            		(float)(((float)Integer.parseInt(split[2])) / 255.0));
+            p1c = Color.color((double)(((float)Integer.parseInt(split[0])) / 255.0), 
+            		(double)(((float)Integer.parseInt(split[1])) / 255.0),
+            		(double)(((float)Integer.parseInt(split[2])) / 255.0));
             split = in.readLine().split(" ");
-            p1c = new Color((float)(((float)Integer.parseInt(split[0])) / 255.0), 
-            		(float)(((float)Integer.parseInt(split[1])) / 255.0),
-            		(float)(((float)Integer.parseInt(split[2])) / 255.0));
+            p2c = Color.color((double)(((float)Integer.parseInt(split[0])) / 255.0), 
+            		(double)(((float)Integer.parseInt(split[1])) / 255.0),
+            		(double)(((float)Integer.parseInt(split[2])) / 255.0));
             this.width = Integer.parseInt(in.readLine());
             this.height = Integer.parseInt(in.readLine());
             in.close();
@@ -59,9 +61,9 @@ public class Settings {
         try {
             out = new FileOutputStream(filename);
             String output = "";
-            output = starter + "\n" + this.p1c.getRed() + " " + this.p1c.getGreen() + " "
-            + this.p1c.getBlue() + "\n" + this.p2c.getRed() + " " + this.p2c.getGreen()
-            + " " + this.p2c.getBlue() + "\n" + this.width + "\n" + this.height;
+            output = starter + "\n" + (int)(this.p1c.getRed() * 255.0) + " " + (int)(this.p1c.getGreen() * 255.0) + " "
+            + (int)(this.p1c.getBlue() * 255.0) + "\n" + (int)(this.p2c.getRed() * 255.0) + " " + (int)(this.p2c.getGreen() * 255.0)
+            + " " + (int)(this.p2c.getBlue() * 255.0) + "\n" + this.width + "\n" + this.height;
             out.write(output.getBytes());
             out.close();
         } catch (FileNotFoundException e) {

@@ -1,3 +1,4 @@
+package application;
 /*
  * Main function of the program.
  */

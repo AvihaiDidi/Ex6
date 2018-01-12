@@ -1,3 +1,4 @@
+package application;
 /*
  * This class determines what moves are possible and what constitutes a victory.
  */

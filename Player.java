@@ -1,3 +1,4 @@
+package application;
 /*
  * Abstract class, an object that chooses moves to perform.
  */

@@ -1,3 +1,4 @@
+package application;
 /*
  * A display for the game.
  */

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.GridPane?>
+
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.OptionsMenuController">
+  <columnConstraints>
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+    <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+  </columnConstraints>
+  <rowConstraints>
+    <RowConstraints />
+    <RowConstraints />
+    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+  </rowConstraints>
+   <children>
+      <ChoiceBox fx:id="starter" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label prefHeight="42.0" prefWidth="131.0" text="Starting Player" GridPane.rowIndex="2">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <ColorPicker fx:id="p1c" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <ColorPicker fx:id="p2c" GridPane.columnIndex="3" GridPane.rowIndex="3" />
+      <Label text="Player 1 Color:" GridPane.rowIndex="3">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Label text="Player 2 Color:" GridPane.columnIndex="2" GridPane.rowIndex="3">
+         <font>
+            <Font size="23.0" />
+         </font>
+      </Label>
+      <Button fx:id="save" mnemonicParsing="false" onAction="#SaveAndQuit" prefHeight="50.0" prefWidth="182.0" text="Save and return to menu" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <Button fx:id="cancell" mnemonicParsing="false" onAction="#Cancel" prefHeight="50.0" prefWidth="100.0" text="Cancel" GridPane.columnIndex="1" GridPane.rowIndex="5">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <ChoiceBox fx:id="width" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+      <ChoiceBox fx:id="height" prefHeight="25.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="4" />
+      <Label text="Width" GridPane.rowIndex="4">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+      <Label text="Height" GridPane.columnIndex="2" GridPane.rowIndex="4">
+         <font>
+            <Font size="40.0" />
+         </font>
+      </Label>
+   </children>
+</GridPane>

@@ -1,3 +1,4 @@
+package application;
 /*
  * A type of display that outputs the game onto a text screen.
  */

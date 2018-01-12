@@ -1,3 +1,4 @@
+package application;
 /*
  * A type of player whose input is acquired trough a local keyboard.
  */

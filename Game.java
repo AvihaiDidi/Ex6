@@ -1,3 +1,4 @@
+package application;
 /*
  * Manages the game itself, uses the Rules class to determine what moves are
  *  possible and then gets moves from player objects and determines using the

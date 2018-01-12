@@ -1,3 +1,4 @@
+package application;
 /*
  * The board the game is played on.
  */
