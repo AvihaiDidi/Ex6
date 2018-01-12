@@ -63,10 +63,10 @@ public class Board {
 	 * This function places the initial 4 pieces on a 8x8 game.
 	 */
 	public void SetUpGame() {
-		set(4, 4, 1);
-		set(5, 5, 1);
-		set(4, 5, 2);
-		set(5, 4, 2);
+		set(width / 2, height / 2, 1);
+		set((width / 2) + 1, (height / 2) + 1, 1);
+		set(width / 2, (height / 2) + 1, 2);
+		set((width / 2) + 1, height / 2, 2);
 	}
 
 

@@ -6,15 +6,17 @@
 public class Game {
 	Board board;
 	Rules rules;
+	Settings settings;
 	/*
 	 * Constructor, adds references to the board the game will be played on and
 	 *  the rules that will be used to determine the way the game behaves.
 	 *  @param b - the board the game will be played on.
 	 *  @param r - the rules that judge the behavior of the game.
 	 */
-	public Game(Board b, Rules r) {
+	public Game(Board b, Rules r, Settings settings) {
 		this.board = b;
 		this.rules = r;
+		this.settings = settings;
 	}
 	/*
 	 * The main function of the whole program. Manages the actual game.
@@ -23,7 +25,7 @@ public class Game {
 	 * @param d - Outputs the state of the game visually.
 	 */
 	void RunGame(Player p1, Player p2, Display d) {
-		int move, turn = 1;
+		int move, turn = 3 - settings.starter;
 		int no_move_flag = 0;
 		int[] moves;
 		int[] state = rules.CheckBoardState();
