@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import javafx.scene.paint.Color;
-
+/*
+ * A class that loads and saves game settings from a file on the computer.
+ */
 public class Settings {
 	//the player who starts, takes the value 1 or 2.
 	public int starter;
