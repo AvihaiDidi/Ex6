@@ -1,7 +1,5 @@
 package application;
 
-import java.util.concurrent.TimeUnit;
-
 /*
  * Manages the game itself, uses the Rules class to determine what moves are
  *  possible and then gets moves from player objects and determines using the
@@ -11,63 +9,52 @@ public class Game {
 	Board board;
 	Rules rules;
 	Settings settings;
-	InputListener in;
+	int turn;
 	/*
 	 * Constructor, adds references to the board the game will be played on and
 	 *  the rules that will be used to determine the way the game behaves.
 	 *  @param b - the board the game will be played on.
 	 *  @param r - the rules that judge the behavior of the game.
 	 */
-	public Game(Board b, Rules r, Settings settings, InputListener in) {
+	public Game(Board b, Rules r, Settings settings) {
 		this.board = b;
 		this.rules = r;
 		this.settings = settings;
-		this.in = in;
+		this.turn = 3 - this.settings.starter;
 	}
-	/*
-	 * The main function of the whole program. Manages the actual game.
-	 * @param p1 - Class that controls the black pieces.
-	 * @param p2 - Class that controls the white pieces.
-	 * @param d - Outputs the state of the game visually.
-	 */
-	void RunGame(Display d) {
-		int move, turn = 3 - settings.starter;
-		int no_move_flag = 0;
-		int[] moves;
-		int[] state = rules.CheckBoardState();
-		while (state[0] == 0) {
-			turn = 3 - turn;
-			move = -1;
-			moves = rules.PossibleMoves(turn);
-			d.Print(board, turn, moves);
-			if (moves[0] == 0) {
-				//no possible moves, switch to other player.
-				if (no_move_flag == 0) {
-					no_move_flag = 1;
-				} else {
-					break;
-				}
-			} else {
-				no_move_flag = 0;
-				while (in.get().equals("")) {
-					System.out.println("press test");
-					try {
-						TimeUnit.MILLISECONDS.sleep(16);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
-				String[] split = in.get().split(" ");
-				SetPiece(turn, Integer.parseInt(split[0]), Integer.parseInt(split[1]));
-				in.set("");
+	public Board getBoard() {
+		return this.board;
+	}
+	public int[] getMoves() {
+		return rules.PossibleMoves(turn);
+	}
+	public void press(String presser) {
+		System.out.println("in press handeler.");
+		int x, y, no_move_flag = 0;
+		//check that the chosen move is possible.
+		int[] moves = rules.PossibleMoves(turn);
+		String[] split = presser.split(" ");
+		x = Integer.parseInt(split[0]);
+		y = Integer.parseInt(split[1]);
+		for (int i = 1; i < moves[0] * 2; i += 2) {
+			if (x == moves[i] && y == moves[i + 1]) {
+				no_move_flag = 1;
+				break;
 			}
-			state = rules.CheckBoardState();
 		}
 		if (no_move_flag == 0) {
-			d.PrintBoard(board);
+			return;
 		}
-		d.DeclareWinner(state);
+		//now that the move is known to be possible, do it.
+		System.out.println("performing move.");
+		SetPiece(turn, x, y);
+		turn = 3 - turn;
+		moves = rules.PossibleMoves(turn);
+		if (moves[0] == 0) {
+			//no possible moves, skip turn.
+			turn = 3 - turn;
+		}
+		System.out.println("handeler done.");
 	}
 	/*
 	 * Places a piece and flips adj pieces according to the rules.

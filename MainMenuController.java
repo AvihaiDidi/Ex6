@@ -28,14 +28,14 @@ public class MainMenuController {
 	public void button1(ActionEvent event) {
 		HBox game_root;
 		try {
-			game_root = (HBox)FXMLLoader.load(getClass().getResource("Game.fxml"));
-			Scene game_scene = new Scene(game_root, 700, 520);
-			game_scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-			Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-			stage.setScene(game_scene);
-			stage.show();
+				game_root = (HBox)FXMLLoader.load(getClass().getResource("Game.fxml"));
+				Scene game_scene = new Scene(game_root, 700, 520);
+				game_scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+				Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+				stage.setScene(game_scene);
+				stage.show();
 			} catch(Exception e) {
-			e.printStackTrace();
+				e.printStackTrace();
 			}
 	}
 	/*
