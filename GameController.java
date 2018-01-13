@@ -15,7 +15,7 @@ public class GameController {
 		BoardDisplay display = new BoardDisplay(s);
 		//ConsoleDisplay display = new ConsoleDisplay();
 		display.setPrefHeight(500);
-		display.setPrefWidth(450);
+		display.setPrefWidth(500);
 		root.getChildren().add(0, display);
 		PlayerHumanLocal p1 = new PlayerHumanLocal();
 		PlayerHumanLocal p2 = new PlayerHumanLocal();
@@ -24,5 +24,7 @@ public class GameController {
 		display.PrintBoard(b);
 		//g.RunGame(p1, p2, display);
 	}
-
+	public void press() {
+		System.out.println("press test");
+	}
 }
