@@ -86,4 +86,13 @@ public class Settings {
     	height = 8;
 		save();
     }
+    
+    public int getRows() {
+    	return this.height;
+    }
+    
+    public int getCols() {
+    	return this.width;
+    }
+
 }
