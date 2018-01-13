@@ -12,7 +12,8 @@ public class GameController {
 		s.load();
 		Board b = new Board(s.width, s.height);
 		b.SetUpGame();
-		BoardDisplay display = new BoardDisplay(s.getRows(), s.getCols());
+		BoardDisplay display = new BoardDisplay(s);
+		//ConsoleDisplay display = new ConsoleDisplay();
 		display.setPrefHeight(500);
 		display.setPrefWidth(450);
 		root.getChildren().add(0, display);
@@ -20,7 +21,8 @@ public class GameController {
 		PlayerHumanLocal p2 = new PlayerHumanLocal();
 		Rules r = new Rules(b);
 		Game g = new Game(b, r, s);
-		g.RunGame(p1, p2, display);
+		display.PrintBoard(b);
+		//g.RunGame(p1, p2, display);
 	}
 
 }
