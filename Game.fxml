@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+
+<HBox fx:id="root" fillHeight="false" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GameController">
+   <children>
+   
+   	<VBox spacing="10">
+      <children>
+      		<Button alignment="CENTER_RIGHT">End Game</Button>
+      </children>
+   	</VBox>
+   </children>
+	
+</HBox>
