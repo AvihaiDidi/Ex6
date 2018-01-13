@@ -3,6 +3,8 @@ package application;
 import java.io.IOException;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
@@ -11,6 +13,7 @@ import javafx.scene.shape.*;
 public class BoardDisplay extends GridPane {
 	Settings s;
 	Game g;
+	
 	public BoardDisplay(Settings s, Game g) {
 		this.s = s;
 		this.g = g;
@@ -42,7 +45,14 @@ public class BoardDisplay extends GridPane {
 		for (int j = 1; j <= this.s.getRows(); j++) {
 			for (int i = 1; i <= this.s.getCols(); i++) {
 				if (g.getBoard().get(i, j) == 0) {
-					Rectangle b_rec = new Rectangle(cellWidth, cellHeight, Color.GRAY);
+					Color color = Color.GREY;
+					int[] moves = g.getMoves();
+					for(int a = 1; a < moves[0]; a+=2) {
+						if(moves[a] == i && moves[a+1] == j) {
+							color = Color.BURLYWOOD;
+						}
+					}
+					Rectangle b_rec = new Rectangle(cellWidth, cellHeight, color);
 					b_rec.setId(i + " " + j);
 					b_rec.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 						g.press(b_rec.getId());
@@ -50,6 +60,11 @@ public class BoardDisplay extends GridPane {
 					});
 					this.add(b_rec, i, j);
 				} else {
+					int life = g.checkLife();
+					if(life != 0) {
+						DeclareWinner(life);
+						return;
+					}
 					Rectangle rec;
 					if (g.getBoard().get(i, j) == 1) {
 						rec = new Rectangle(cellWidth, cellHeight, this.s.p1c);
@@ -65,9 +80,23 @@ public class BoardDisplay extends GridPane {
 		}
 	}
 
-	public void DeclareWinner(int[] state) {
-		// TODO Auto-generated method stub
+	public void DeclareWinner(int winner) {
+		if(winner == 3) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Game Ended");
+			alert.setHeaderText(null);
+			alert.setContentText("its a tie!");
 
+			alert.showAndWait();
+			return;
+		}
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("Game Ended");
+		alert.setHeaderText(null);
+		alert.setContentText("Player " + winner + " wins!");
+
+		alert.showAndWait();
+		
 	}
 
 }

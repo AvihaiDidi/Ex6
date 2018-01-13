@@ -10,17 +10,19 @@ public class Game {
 	Rules rules;
 	Settings settings;
 	int turn;
+	StatListener stats;
 	/*
 	 * Constructor, adds references to the board the game will be played on and
 	 *  the rules that will be used to determine the way the game behaves.
 	 *  @param b - the board the game will be played on.
 	 *  @param r - the rules that judge the behavior of the game.
 	 */
-	public Game(Board b, Rules r, Settings settings) {
+	public Game(Board b, Rules r, Settings settings, StatListener stats) {
 		this.board = b;
 		this.rules = r;
 		this.settings = settings;
 		this.turn = 3 - this.settings.starter;
+		this.stats = stats;
 	}
 	public Board getBoard() {
 		return this.board;
@@ -29,7 +31,6 @@ public class Game {
 		return rules.PossibleMoves(turn);
 	}
 	public void press(String presser) {
-		System.out.println("in press handeler.");
 		int x, y, no_move_flag = 0;
 		//check that the chosen move is possible.
 		int[] moves = rules.PossibleMoves(turn);
@@ -46,7 +47,6 @@ public class Game {
 			return;
 		}
 		//now that the move is known to be possible, do it.
-		System.out.println("performing move.");
 		SetPiece(turn, x, y);
 		turn = 3 - turn;
 		moves = rules.PossibleMoves(turn);
@@ -54,7 +54,7 @@ public class Game {
 			//no possible moves, skip turn.
 			turn = 3 - turn;
 		}
-		System.out.println("handeler done.");
+		stats.updateStat(turn, board.getScore(1), board.getScore(2));
 	}
 	/*
 	 * Places a piece and flips adj pieces according to the rules.
@@ -125,5 +125,10 @@ public class Game {
 			}
 			board.set(cx, cy, color);
 		}
+	}
+	
+	public int checkLife() {
+		int[] state = this.rules.CheckBoardState();
+		return state[0];
 	}
 }

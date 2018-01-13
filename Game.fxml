@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.control.*?>
@@ -7,10 +8,28 @@
 <HBox fx:id="root" fillHeight="false" spacing="10" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.GameController">
    <children>
    
-   	<VBox spacing="10">
-      <children>
-      		<Button alignment="CENTER_RIGHT">End Game</Button>
-      </children>
+   	<VBox spacing="70.0">
+         <children>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="current player:" wrappingWidth="91.083984375" />
+                  <Text fx:id="curPlayer" strokeType="OUTSIDE" strokeWidth="0.0" text=" " wrappingWidth="101.13671875" GridPane.columnIndex="1" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Player1 score:" wrappingWidth="85.13671875" GridPane.rowIndex="1" />
+                  <Text fx:id="p1Score" strokeType="OUTSIDE" strokeWidth="0.0" text=" " wrappingWidth="94.13671875" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Player2 score: " wrappingWidth="86.189453125" GridPane.rowIndex="2" />
+                  <Text fx:id="p2Score" strokeType="OUTSIDE" strokeWidth="0.0" text=" " wrappingWidth="81.13671875" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+               </children>
+            </GridPane>
+         </children>
    	</VBox>
    </children>
 	
