@@ -10,9 +10,10 @@ import javafx.scene.shape.*;
 
 public class BoardDisplay extends GridPane implements Display {
 	Settings s;
-	
-	public BoardDisplay(Settings s) {
+	InputListener in;
+	public BoardDisplay(Settings s, InputListener in) {
 		this.s = s;
+		this.in = in;
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BoardDisplay.fxml"));
 		fxmlLoader.setRoot(this);
 		fxmlLoader.setController(this);
@@ -32,8 +33,6 @@ public class BoardDisplay extends GridPane implements Display {
 			this.getChildren();
 		}
 	}
-
-
 	@Override
 	public void PrintBoard(Board b) {
 		int height = (int)this.getPrefHeight();
@@ -49,6 +48,7 @@ public class BoardDisplay extends GridPane implements Display {
 					b_rec.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
 						String[] split = b_rec.getId().split(" ");
 						System.out.println("pressed: " + Integer.parseInt(split[0]) + ", " + Integer.parseInt(split[1]));
+						in.set(b_rec.getId());
 					});
 					this.add(b_rec, i, j);
 				} else {

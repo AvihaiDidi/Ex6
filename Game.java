@@ -1,4 +1,7 @@
 package application;
+
+import java.util.concurrent.TimeUnit;
+
 /*
  * Manages the game itself, uses the Rules class to determine what moves are
  *  possible and then gets moves from player objects and determines using the
@@ -8,16 +11,18 @@ public class Game {
 	Board board;
 	Rules rules;
 	Settings settings;
+	InputListener in;
 	/*
 	 * Constructor, adds references to the board the game will be played on and
 	 *  the rules that will be used to determine the way the game behaves.
 	 *  @param b - the board the game will be played on.
 	 *  @param r - the rules that judge the behavior of the game.
 	 */
-	public Game(Board b, Rules r, Settings settings) {
+	public Game(Board b, Rules r, Settings settings, InputListener in) {
 		this.board = b;
 		this.rules = r;
 		this.settings = settings;
+		this.in = in;
 	}
 	/*
 	 * The main function of the whole program. Manages the actual game.
@@ -25,7 +30,7 @@ public class Game {
 	 * @param p2 - Class that controls the white pieces.
 	 * @param d - Outputs the state of the game visually.
 	 */
-	void RunGame(Player p1, Player p2, Display d) {
+	void RunGame(Display d) {
 		int move, turn = 3 - settings.starter;
 		int no_move_flag = 0;
 		int[] moves;
@@ -44,22 +49,18 @@ public class Game {
 				}
 			} else {
 				no_move_flag = 0;
-				while (move == -1) {
-					d.AskForMove();
-					if (turn == 1) {
-						move = p1.GetMove(moves);
-					} else {
-						move = p2.GetMove(moves);
-					}
-					if (move == -1) {
-						d.InvalidMove();
-					}
-					if (move == -2) {
-						d.InvalidFormat();
-						move = -1;
+				while (in.get().equals("")) {
+					System.out.println("press test");
+					try {
+						TimeUnit.MILLISECONDS.sleep(16);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
 					}
 				}
-				SetPiece(turn, moves[move], moves[move + 1]);
+				String[] split = in.get().split(" ");
+				SetPiece(turn, Integer.parseInt(split[0]), Integer.parseInt(split[1]));
+				in.set("");
 			}
 			state = rules.CheckBoardState();
 		}

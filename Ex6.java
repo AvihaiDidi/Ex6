@@ -4,7 +4,7 @@ package application;
  */
 public class Ex6 {
 	public static void main(String[] args) {
-		Settings s = new Settings("settings.txt");
+		/*Settings s = new Settings("settings.txt");
 		s.load();
 		Board b = new Board(s.width, s.height);
 		b.SetUpGame();
@@ -13,7 +13,7 @@ public class Ex6 {
 		PlayerHumanLocal p2 = new PlayerHumanLocal();
 		Rules r = new Rules(b);
 		Game g = new Game(b, r, s);
-		g.RunGame(p1, p2, d);
+		g.RunGame(p1, p2, d);*/
 	}
 
 }

@@ -12,17 +12,16 @@ public class GameController {
 		s.load();
 		Board b = new Board(s.width, s.height);
 		b.SetUpGame();
-		BoardDisplay display = new BoardDisplay(s);
+		InputListener in = new InputListener();
+		BoardDisplay display = new BoardDisplay(s, in);
 		//ConsoleDisplay display = new ConsoleDisplay();
 		display.setPrefHeight(500);
 		display.setPrefWidth(500);
 		root.getChildren().add(0, display);
-		PlayerHumanLocal p1 = new PlayerHumanLocal();
-		PlayerHumanLocal p2 = new PlayerHumanLocal();
 		Rules r = new Rules(b);
-		Game g = new Game(b, r, s);
+		Game g = new Game(b, r, s, in);
 		display.PrintBoard(b);
-		//g.RunGame(p1, p2, display);
+		g.RunGame(display);
 	}
 	public void press() {
 		System.out.println("press test");
