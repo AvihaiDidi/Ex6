@@ -5,5 +5,5 @@ this project contains a basic Reversi game that consists of two main modules:
 
 2. View: made using JavaFX
 
-// this game is a stripped down version of the C++ game that also contains a multi threaded server for online opponents and was made to 
-// demonstrate the use of JavaFX
+* this game is a stripped down version of the C++ game that also contains a multi threaded server 
+* for online opponents and was made to demonstrate the use of JavaFX
