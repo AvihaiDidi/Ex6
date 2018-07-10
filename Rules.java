@@ -47,6 +47,7 @@ public class Rules {
 		 * state[2] black count
 		 */
 		int[] state = new int[3];
+		state[0] = state[1] = state[2] = 0;
 		for (int i = 1; i <= board.getWidth(); i++) {
 			for (int j = 1; j <= board.getHeight(); j++) {
 				if (board.get(i, j) == 0) {

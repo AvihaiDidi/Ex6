@@ -70,5 +70,16 @@ public class Board {
 		set((width / 2) + 1, height / 2, 2);
 	}
 
+	public int getScore(int playerNum) {
+		int score = 0;
+		for(int i = 0; i < height; i++) {
+			for(int j = 0; j < width; j++) {
+				if(b[i][j] == playerNum) {
+					score++;
+				}
+			}
+		}
+		return score;
+	}
 
 }

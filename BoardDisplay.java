@@ -1,105 +1,203 @@
 package application;
 
+
+
 import java.io.IOException;
 
+
+
 import javafx.fxml.FXMLLoader;
+
+import javafx.scene.control.Alert;
+
+import javafx.scene.control.Alert.AlertType;
+
+import javafx.scene.input.MouseEvent;
+
 import javafx.scene.layout.GridPane;
+
 import javafx.scene.paint.Color;
+
 import javafx.scene.shape.*;
 
-public class BoardDisplay extends GridPane implements Display {
-	int rows, cols;
+
+
+public class BoardDisplay extends GridPane {
+
+	Settings s;
+
+	Game g;
+
 	
-	public BoardDisplay(int rows, int cols) {
-		this.rows = rows;
-		this.cols = cols;
+
+	public BoardDisplay(Settings s, Game g) {
+
+		this.s = s;
+
+		this.g = g;
+
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("BoardDisplay.fxml"));
+
 		fxmlLoader.setRoot(this);
+
 		fxmlLoader.setController(this);
 
+
+
 		try {
+
 			fxmlLoader.load();
+
 		} catch (IOException exception) {
+
 			throw new RuntimeException(exception);
+
 		}
+
 	}
 
-	@Override
-	public void Print(Board b, int turn, int[] moves) {
+
+
+	public void Print() {
+
 		this.getChildren().clear();
 
-		int height = (int)this.getPrefHeight();
-		int width = (int)this.getPrefWidth();
+		int[] moves = g.getMoves();
 
-		int cellHeight = height / (this.rows + 1);
-		int cellWidth = width / (this.cols + 1);
+		PrintBoard();
 
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				if (b.get(i, j) == 0) {
-					this.add(new Rectangle(cellWidth, cellHeight,
-							Color.GREEN), j, i);
-				} else if(b.get(i, j) == 1) {
-					this.add(new Circle(cellWidth, cellHeight,
-							40, Color.BLACK), j, i);
-				} else if(b.get(i, j) == 2) {
-					this.add(new Circle(cellWidth, cellHeight,
-							40, Color.WHITE), j, i);
-				}
-			} 
-		}
-		
 		for(int i = 0; i < moves.length / 2; i++) {
+
 			this.getChildren();
+
 		}
+
 	}
 
-
-	@Override
-	public void PrintBoard(Board b) {
-		this.getChildren().clear();
+	private void PrintBoard() {
 
 		int height = (int)this.getPrefHeight();
+
 		int width = (int)this.getPrefWidth();
 
-		int cellHeight = height / this.rows;
-		int cellWidth = width / this.cols;
 
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				if (b.get(i, j) == 0) {
-					this.add(new Rectangle(cellWidth, cellHeight,
-							Color.GREEN), j, i);
-				} else if(b.get(i, j) == 1) {
-					this.add(new Circle(cellWidth, cellHeight,
-							30, Color.BLACK), j, i);
-				} else if(b.get(i, j) == 2) {
-					this.add(new Circle(cellWidth, cellHeight,
-							30, Color.WHITE), j, i);
+
+		int cellHeight = height / this.s.getRows();
+
+		int cellWidth = width / this.s.getCols();
+
+		for (int j = 1; j <= this.s.getRows(); j++) {
+
+			for (int i = 1; i <= this.s.getCols(); i++) {
+
+				if (g.getBoard().get(i, j) == 0) {
+
+					Color color = Color.GREY;
+
+					int[] moves = g.getMoves();
+
+					for(int a = 1; a < moves[0]; a+=2) {
+
+						if(moves[a] == i && moves[a+1] == j) {
+
+							color = Color.BURLYWOOD;
+
+						}
+
+					}
+
+					Rectangle b_rec = new Rectangle(cellWidth, cellHeight, color);
+
+					b_rec.setId(i + " " + j);
+
+					b_rec.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+
+						g.press(b_rec.getId());
+
+						Print();
+
+					});
+
+					this.add(b_rec, i, j);
+
+				} else {
+
+					int life = g.checkLife();
+
+					if(life != 0) {
+
+						DeclareWinner(life);
+
+						return;
+
+					}
+
+					Rectangle rec;
+
+					if (g.getBoard().get(i, j) == 1) {
+
+						rec = new Rectangle(cellWidth, cellHeight, this.s.p1c);
+
+						this.add(rec, i, j);
+
+					} else if (g.getBoard().get(i, j) == 2) {
+
+						rec = new Rectangle(cellWidth, cellHeight, this.s.p2c);
+
+						this.add(rec, i, j);
+
+					} else {
+
+						System.out.println("Error while printing board.");
+
+					}
+
 				}
-			} 
+
+			}
+
 		}
+
 	}
 
-	@Override
-	public void AskForMove() {
+
+
+	public void DeclareWinner(int winner) {
+
+		if(winner == 3) {
+
+			Alert alert = new Alert(AlertType.INFORMATION);
+
+			alert.setTitle("Game Ended");
+
+			alert.setHeaderText(null);
+
+			alert.setContentText("its a tie!");
+
+
+
+			alert.showAndWait();
+
+			return;
+
+		}
+
+		Alert alert = new Alert(AlertType.INFORMATION);
+
+		alert.setTitle("Game Ended");
+
+		alert.setHeaderText(null);
+
+		alert.setContentText("Player " + winner + " wins!");
+
+
+
+		alert.showAndWait();
+
 		
-	}
-
-	@Override
-	public void InvalidMove() {
-		
-	}
-
-	@Override
-	public void InvalidFormat() {
-		
-	}
-
-	@Override
-	public void DeclareWinner(int[] state) {
-		// TODO Auto-generated method stub
 
 	}
+
+
 
 }

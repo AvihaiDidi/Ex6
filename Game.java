@@ -1,4 +1,5 @@
 package application;
+
 /*
  * Manages the game itself, uses the Rules class to determine what moves are
  *  possible and then gets moves from player objects and determines using the
@@ -8,65 +9,52 @@ public class Game {
 	Board board;
 	Rules rules;
 	Settings settings;
+	int turn;
+	StatListener stats;
 	/*
 	 * Constructor, adds references to the board the game will be played on and
 	 *  the rules that will be used to determine the way the game behaves.
 	 *  @param b - the board the game will be played on.
 	 *  @param r - the rules that judge the behavior of the game.
 	 */
-	public Game(Board b, Rules r, Settings settings) {
+	public Game(Board b, Rules r, Settings settings, StatListener stats) {
 		this.board = b;
 		this.rules = r;
 		this.settings = settings;
+		this.turn = 3 - this.settings.starter;
+		this.stats = stats;
 	}
-	/*
-	 * The main function of the whole program. Manages the actual game.
-	 * @param p1 - Class that controls the black pieces.
-	 * @param p2 - Class that controls the white pieces.
-	 * @param d - Outputs the state of the game visually.
-	 */
-	void RunGame(Player p1, Player p2, Display d) {
-		int move, turn = 3 - settings.starter;
-		int no_move_flag = 0;
-		int[] moves;
-		int[] state = rules.CheckBoardState();
-		while (state[0] == 0) {
-			turn = 3 - turn;
-			move = -1;
-			moves = rules.PossibleMoves(turn);
-			d.Print(board, turn, moves);
-			if (moves[0] == 0) {
-				//no possible moves, switch to other player.
-				if (no_move_flag == 0) {
-					no_move_flag = 1;
-				} else {
-					break;
-				}
-			} else {
-				no_move_flag = 0;
-				while (move == -1) {
-					d.AskForMove();
-					if (turn == 1) {
-						move = p1.GetMove(moves);
-					} else {
-						move = p2.GetMove(moves);
-					}
-					if (move == -1) {
-						d.InvalidMove();
-					}
-					if (move == -2) {
-						d.InvalidFormat();
-						move = -1;
-					}
-				}
-				SetPiece(turn, moves[move], moves[move + 1]);
+	public Board getBoard() {
+		return this.board;
+	}
+	public int[] getMoves() {
+		return rules.PossibleMoves(turn);
+	}
+	public void press(String presser) {
+		int x, y, no_move_flag = 0;
+		//check that the chosen move is possible.
+		int[] moves = rules.PossibleMoves(turn);
+		String[] split = presser.split(" ");
+		x = Integer.parseInt(split[0]);
+		y = Integer.parseInt(split[1]);
+		for (int i = 1; i < moves[0] * 2; i += 2) {
+			if (x == moves[i] && y == moves[i + 1]) {
+				no_move_flag = 1;
+				break;
 			}
-			state = rules.CheckBoardState();
 		}
 		if (no_move_flag == 0) {
-			d.PrintBoard(board);
+			return;
 		}
-		d.DeclareWinner(state);
+		//now that the move is known to be possible, do it.
+		SetPiece(turn, x, y);
+		turn = 3 - turn;
+		moves = rules.PossibleMoves(turn);
+		if (moves[0] == 0) {
+			//no possible moves, skip turn.
+			turn = 3 - turn;
+		}
+		stats.updateStat(turn, board.getScore(1), board.getScore(2));
 	}
 	/*
 	 * Places a piece and flips adj pieces according to the rules.
@@ -137,5 +125,10 @@ public class Game {
 			}
 			board.set(cx, cy, color);
 		}
+	}
+	
+	public int checkLife() {
+		int[] state = this.rules.CheckBoardState();
+		return state[0];
 	}
 }
